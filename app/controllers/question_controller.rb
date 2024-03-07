@@ -3,7 +3,7 @@ class QuestionController < ApplicationController
 
   def index
     @questions = Question.all
-    render 'question_bank/index'
+    render 'question/index'
   end
 
   def new
