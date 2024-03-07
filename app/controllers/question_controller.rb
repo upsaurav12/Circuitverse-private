@@ -1,13 +1,17 @@
 class QuestionController < ApplicationController
-    before_action :set_question, only: [:edit, :update, :destroy]
+    before_action :set_question, only: [:show ,:edit, :update, :destroy]
 
   def index
     @questions = Question.all
     render 'question_bank/index'
   end
 
+  def show
+  end
+
   def new
     @question = Question.new
+    render 'question_bank/new'
   end
 
   def create

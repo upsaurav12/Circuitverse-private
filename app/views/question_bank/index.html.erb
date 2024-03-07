@@ -1,1 +1,79 @@
-<h1>Hello this is the Question bank </h1>
+<!-- app/views/question_bank/index.html.erb -->
+<div class="container mt-5">
+  <h2 class="mb-4">Question Bank</h2>
+
+  <%= link_to 'New Question', new_question_path, class: 'btn btn-primary mb-3' %>
+
+  <% if @questions.present? %>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th>Title</th>
+          <th>Content</th>
+          <th>Difficulty</th>
+          <th>Category</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @questions.each do |question| %>
+          <tr>
+            <td><%= question.title %></td>
+            <td><%= question.content %></td>
+            <td><%= question.difficulty %></td>
+            <td><%= question.category %></td>
+            <td>
+              <%= link_to 'Show', question, class: 'btn btn-info btn-sm' %>
+              <%= link_to 'Edit', edit_question_path(question), class: 'btn btn-warning btn-sm' %>
+              <%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' },
+                  class: 'btn btn-danger btn-sm' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="alert alert-info" role="alert">
+      No questions found. <%= link_to 'Create a new question', new_question_path %>.
+    </div>
+  <% end %>
+
+  <div class="text-center">
+    <%= link_to 'New Question', new_question_path, class: 'btn btn-primary' %>
+  </div>
+
+  <h2 class="mt-5">Featured Questions</h2>
+
+  <div class="row">
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Featured Question 1</h5>
+          <p class="card-text">This is a featured question with additional details.</p>
+          <%= link_to 'View Details', '#', class: 'btn btn-primary btn-sm' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Featured Question 2</h5>
+          <p class="card-text">Another featured question to showcase more content.</p>
+          <%= link_to 'View Details', '#', class: 'btn btn-primary btn-sm' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Featured Question 3</h5>
+          <p class="card-text">Explore this featured question with additional information.</p>
+          <%= link_to 'View Details', '#', class: 'btn btn-primary btn-sm' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
