@@ -5,8 +5,8 @@ class QuestionController < ApplicationController
     @questions = Question.all
     render 'question/index'
   end
-
   def show 
+    
   end
 
   def new
