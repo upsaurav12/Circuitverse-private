@@ -236,6 +236,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :question
+  resources :questions
 end
 # rubocop:enable Metrics/BlockLength
