@@ -1,3 +1,9 @@
-<h1><%= @question.title %></h1>
-<h2><%= @question.content %></h2>
-<%= link_to "Back" , questions_path%>
+<div class="question-container">
+    <div class="question-left">
+        <h4><%= @question.title %></h4>
+        <h5><%= @question.content %></h5>
+        <%= link_to "Back" , questions_path%>
+    </div>
+    <div class="question-right">
+    </div>
+</div>

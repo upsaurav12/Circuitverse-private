@@ -6,9 +6,8 @@
   <div id="questions">
     <% @questions.each do |question| %>
       <div class="border border-dark p-3 mb-3 d-flex justify-content-between">
-      <div class="title">
-                <h3><%= question.title %></h3>
-                <p><%= question.content %></p>
+      <div class="title m-4">
+                <h3><%= question.id %>. <%=question.title %></h3>
       </div>
         <div class="buttons">
           <%= link_to "Show", question , class: "btn btn-primary d-block" %>
