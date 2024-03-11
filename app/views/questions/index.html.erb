@@ -1,0 +1,22 @@
+<p style="color: green"><%= notice %></p>
+
+<div class="container m-1">
+  <h1>Question Bank</h1>
+
+  <div id="questions">
+    <% @questions.each do |question| %>
+      <div class="border border-dark p-3 mb-3 d-flex justify-content-between">
+      <div class="title">
+                <h3><%= question.title %></h3>
+                <p><%= question.content %></p>
+      </div>
+        <div class="buttons">
+          <%= link_to "Show", question , class: "btn btn-primary d-block" %>
+          <%= link_to "Edit", edit_question_path(question), class: "btn btn-warning mr-2 mt-3 pr-4 text-center d-block" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%= link_to "New Question", new_question_path, class: "btn btn-primary mt-3" %>
+</div>

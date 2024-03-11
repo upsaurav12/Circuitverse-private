@@ -1,0 +1,36 @@
+<h1>Editing the Question</h1>
+
+<div class="m-3">
+  <%= form_with(model: @question, url: question_path(@question), method: :patch) do |form| %>
+
+    <% if @question.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved:</h2>
+
+        <ul>
+          <% @question.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.label :title, style: "display: block" %>
+      <%= form.text_field :title, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :content, style: "display: block" %>
+      <%= form.text_area :content, class: "form-control" %>
+    </div>
+
+    <!-- Add additional form fields as needed -->
+
+    <div class="form-group">
+      <%= form.submit "Edit", class: "btn btn-primary" %>
+      <%= link_to "Back", questions_path %>
+     <%= link_to 'Delete', question_path(@question), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+    </div>
+  <% end %>
+</div>
