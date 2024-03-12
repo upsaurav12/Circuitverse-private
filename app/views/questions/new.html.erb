@@ -1,3 +1,6 @@
+<%= content_for :head do %>
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<% end %>
 <div class="m-3">
     <%= form_with(model: @question, url: questions_path, method: :post) do |form| %>
   
@@ -20,7 +23,7 @@
 
   <div class="form-group">
     <%= form.label :content, style: "display: block" %>
-    <%= form.text_area :content, class: "form-control" %>
+    <%= form.text_area :content, class: "form-control description", id: "markdown-editor" %>
   </div>
 
   <!-- Add additional form fields as needed -->
@@ -31,3 +34,14 @@
   </div>
 <% end %>
 </div>
+<script>
+  console.log("Script start");
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("DOMContentLoaded event");
+  var simplemde = new SimpleMDE({
+    element: document.getElementById("markdown-editor"),
+    // Customize options as needed
+  });
+  console.log("SimpleMDE initialized");
+})
+</script>
