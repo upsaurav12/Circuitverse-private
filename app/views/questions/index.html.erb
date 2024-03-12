@@ -2,7 +2,7 @@
 
 <div class="container m-1">
   <h1>Question Bank</h1>
-
+  <button id="sortButton" class="btn btn-primary mt-3">Sort Questions</button>
   <div id="questions">
     <% @questions.each do |question| %>
       <div class="border border-dark p-3 mb-3 d-flex justify-content-between">
@@ -19,3 +19,29 @@
 
   <%= link_to "New Question", new_question_path, class: "btn btn-primary mt-3" %>
 </div>
+<script>
+  // app/assets/javascripts/sort_questions.js
+document.addEventListener('DOMContentLoaded', function () {
+  let sortButton = document.getElementById('sortButton');
+  sortButton.addEventListener('click', function () {
+    sortButton.style.backgroundColor = 'rgb(51, 102, 153)';
+    sortQuestions();
+  });
+});
+
+function sortQuestions() {
+  const questionsContainer = document.getElementById('questions');
+  const questions = Array.from(questionsContainer.children);
+
+  // Sort questions based on title (change to your sorting criteria)
+  const sortedQuestions = questions.sort((a, b) => {
+    const titleA = a.querySelector('.title').innerText.toLowerCase();
+    const titleB = b.querySelector('.title').innerText.toLowerCase();
+    return titleA.localeCompare(titleB);
+  });
+
+  // Update the DOM with sorted questions
+  sortedQuestions.forEach(question => questionsContainer.appendChild(question));
+}
+
+</script>
