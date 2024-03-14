@@ -1,31 +1,20 @@
-<body class="scrollbar-hidden">
-    <div class="question-container d-flex">
-        <div class="question-left">
-            <h4><%= @question.id%>.
-                <%= @question.title %></h4>
-            <h5><%= @question.content %></h5>
-            <%= link_to "Back" , questions_path%>
-        </div>
-        <%= form_for @question do |form| %>
-            <div class="question-right">
-                <div class="simulator">
-                    <%= form_for @question do |form| %>
-                        <!-- Your form fields go here -->
-                        <div class="form-group">
-                            <%= form.label :title %>
-                            <%= form.text_field :title, class: "form-control" %>
-                        </div>
-                        <div class="form-group">
-                            <%= form.label :content %>
-                            <%= form.rich_text_area :content, class: "form-control" %>
-                        </div>
-                        <div class="form-group">
-                            <%= form.submit "Submit", class: "btn btn-primary" %>
-                        </div>
-                    <% end %>
-                </div>
-            </div>
-        <% end %>
-        
-    </div>
-</div></body>
+<html>
+  <head>
+    <title><%= t("layout.simulator.title") %></title>
+    <%= csrf_meta_tags %>
+    <script>window.locale = "<%= I18n.locale %>"</script>
+    <script src="/js/pace.js"></script>
+    <%= vite_client_tag %>
+    <%= vite_javascript_tag "jquery" %>
+    <%= vite_javascript_tag "bootstrap" %>
+    <%= vite_javascript_tag "simulator" %>
+    <%= favicon_link_tag "favicon.ico" %>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <%= render "layouts/google_analytics" %>
+  </head>
+
+  <body>
+    <%= yield %>
+    <%= render partial: 'questions/simulator'%>
+  </body>
+</html>
