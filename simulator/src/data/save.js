@@ -112,8 +112,35 @@ export function generateSaveData(name, setName = true) {
     for (let id in scopeList) { saveScope(id); }
 
     // convert to text
-    data = JSON.stringify(data);
-    //console.log(data)
+    let json_data = JSON.stringify(data);
+    let example_data = {
+        title: 'Your question title',
+        content: 'Your question content',
+        name: stripTags(name),
+        timePeriod: simulationArea.timePeriod,
+        clockEnabled: simulationArea.clockEnabled,
+        projectId: projectId,
+        focussedCircuit: globalScope.id,
+        orderedTabs: getTabsOrder(),
+        scopes: []
+    }
+    $.ajax({
+        url: '/questions',
+        dataType: 'json',
+        type: 'POST',
+        contentType: 'application/json',
+        beforeSend(xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+        },
+        data: JSON.stringify(example_data),
+        success: function(response) {
+            console.log('Response from Rails:', response);
+            // Handle the response if needed
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('Error:', errorThrown);
+        }
+    });
     return data;
 }
 
