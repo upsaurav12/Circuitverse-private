@@ -60,7 +60,7 @@ export function getTabsOrder() {
     var tabs = $("#tabsBar").children().not('button');
     var order = [];
     for (let i = 0; i < tabs.length; i++) {
-         order.push(tabs[i].id);
+        order.push(tabs[i].id);
     }
     return order
 }
@@ -113,6 +113,7 @@ export function generateSaveData(name, setName = true) {
 
     // convert to text
     data = JSON.stringify(data);
+    //console.log(data)
     return data;
 }
 
@@ -247,22 +248,22 @@ export function generateImage(imgType, view, transparent, resolution, down = tru
 }
 
 async function crop(dataURL, w, h) {
-  //get empty second canvas
-  var myCanvas = document.createElement("CANVAS");
-  myCanvas.width = w;
-  myCanvas.height = h;
-  var myContext = myCanvas.getContext('2d');
-  var myImage;
-  var img = new Image();
-  return new Promise (function (resolved, rejected) {
+    //get empty second canvas
+    var myCanvas = document.createElement("CANVAS");
+    myCanvas.width = w;
+    myCanvas.height = h;
+    var myContext = myCanvas.getContext('2d');
+    var myImage;
+    var img = new Image();
+    return new Promise (function (resolved, rejected) {
         img.src = dataURL;
         img.onload = () => {
-        myContext.drawImage(img, 0, 0, w, h,0,0, w ,h);
-        myContext.save();
+            myContext.drawImage(img, 0, 0, w, h,0,0, w ,h);
+            myContext.save();
 
-        //create a new data URL
-        myImage = myCanvas.toDataURL('image/jpeg');
-        resolved(myImage);}
+            //create a new data URL
+            myImage = myCanvas.toDataURL('image/jpeg');
+            resolved(myImage);}
     })
 }
 

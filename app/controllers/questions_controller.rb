@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
-    before_action :set_question, only: [:edit, :update, :destroy]
-    before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_question, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!
 
   def index
     @questions = Question.all
@@ -17,16 +17,17 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
+    json_file_path = Rails.root.join('app', 'views', 'questions', 'javascript', 'fetch.json')
+    json_data = File.read(json_file_path)
     if @question.save
+      parsed_json = JSON.parse(json_data)
       redirect_to question_url(@question), notice: 'Quesjkbskstion was successfully created.'
+      Rails.logger.info("Parsed JSON: #{parsed_json.inspect}")
     else
       render :new
     end
   end
-  
-
   def edit
-    
   end
 
   def update
@@ -49,6 +50,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :content) # Update with your model attributes
+    params.require(:question).permit(:title, :content)
   end
 end

@@ -48,6 +48,8 @@ export class TestbenchData {
         this.currentCase = currentCase;
         this.currentGroup = currentGroup;
         this.testData = data;
+
+        //console.log("HELLO", data)
     }
 
     /**
@@ -73,7 +75,7 @@ export class TestbenchData {
             this.currentCase = caseIndex;
             return true;
         }
-
+        //console.log("HELLO2")
         return false;
     }
 
@@ -94,6 +96,7 @@ export class TestbenchData {
 
         this.currentGroup = newCase.currentGroup;
         this.currentCase = newCase.currentCase;
+        //console.log("HELLO3")
         return true;
     }
 
@@ -115,6 +118,7 @@ export class TestbenchData {
         this.currentGroup = newCase.currentGroup;
         this.currentCase = newCase.currentCase;
         return true;
+        
     }
 
     /**
@@ -201,7 +205,7 @@ function creatorOpenPrompt(creatorWindow) {
             },
         ],
     });
-
+    //console.log("HELLO4")
     $('#setTestbenchData').empty();
     $('#setTestbenchData').append(s);
 }
@@ -228,6 +232,7 @@ export function runTestBench(data, scope = globalScope, runContext = CONTEXT.CON
         globalScope.testbenchData = tempTestbenchData;
 
         updateTestbenchUI();
+        //console.log("Hi ",globalScope.testbenchData.testData);
         return;
     }
 
@@ -270,6 +275,7 @@ export function updateTestbenchUI() {
 
     // Add listener to attach test button
     $('.tb-dialog-button#attach-test-btn').on('click', buttonListenerFunctions.attachTestButton);
+    //console.log("HELLO6");
 }
 
 /**
@@ -335,6 +341,7 @@ const buttonListenerFunctions = {
         $('#runall-detailed-link').on('click', () => { openCreator('result', resultString); });
         $('.testbench-runall-label').css('display', 'table-cell');
         $('.testbench-runall-label').delay(5000).fadeOut('slow');
+        //console.log("HELLO5")
     },
 
     editTestButton: () => {
@@ -804,7 +811,6 @@ function validateOutputs(data, scope) {
     if (invalids.length > 0) return { ok: false, invalids };
     return { ok: true };
 }
-
 /**
  * Returns object of scope inputs and outputs keyed by their labels
  * @param {Object} data - Object containing Test Data
