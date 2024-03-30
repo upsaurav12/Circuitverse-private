@@ -1,7 +1,17 @@
 module QuestionHelper
     def markdown(text)
-        return '' if text.nil?
-        markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-        markdown.render(text).html_safe
+      options = {
+        hard_wrap: true,
+        filter_html: true,
+        autolink: true,
+        tables: true,
+        strikethrough: true,
+        underline: true,
+        highlight: true,
+        quote: true
+      }
+      renderer = Redcarpet::Render::HTML.new(options)
+      markdown = Redcarpet::Markdown.new(renderer)
+      markdown.render(text).html_safe
       end
 end

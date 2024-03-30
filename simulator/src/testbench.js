@@ -232,7 +232,7 @@ export function runTestBench(data, scope = globalScope, runContext = CONTEXT.CON
         globalScope.testbenchData = tempTestbenchData;
 
         updateTestbenchUI();
-        //console.log("Hi ",globalScope.testbenchData.testData);
+        console.log("Hi ",globalScope.testbenchData.testData);
         return;
     }
 

@@ -25,5 +25,6 @@
     {"x":410,"y":80,"objectType":"Input","label":"","direction":"RIGHT","labelDirection":"LEFT",
     "propagationDelay":0,"customData":{"nodes":{"output1":1},"values":{"state":1},"constructorParamaters":["RIGHT",1,{"x":0,"y":40,"id":"hqSnVMWErwiVrpYhvSKG"}]}}],
     "Output":[{"x":580,"y":70,"objectType":"Output","label":"","direction":"LEFT","labelDirection":"RIGHT","propagationDelay":0,"customData":{"nodes":{"inp1":5},"constructorParamaters":["LEFT",1,{"x":100,"y":20,"id":"mPRJCmLElX1f5Vto7YST"}]}}],
-    "OrGate":[{"x":490,"y":70,"objectType":"OrGate","label":"","direction":"RIGHT","labelDirection":"LEFT","propagationDelay":10,"customData":{"constructorParamaters":["RIGHT",2,1],"nodes":{"inp":[2,3],"output1":4}}}],"restrictedCircuitElementsUsed":[],"nodes":[]}]
+    "OrGate":[{"x":490,"y":70,"objectType":"OrGate","label":"","direction":"RIGHT","labelDirection":"LEFT","propagationDelay":10,
+    "customData":{"constructorParamaters":["RIGHT",2,1],"nodes":{"inp":[2,3],"output1":4}}}],"restrictedCircuitElementsUsed":[],"nodes":[]}]
 }

@@ -1,25 +1,44 @@
-<html>
-  <head>
-    <title><%= t("layout.simulator.title") %></title>
-    <%= csrf_meta_tags %>
-    <script>window.locale = "<%= I18n.locale %>"</script>
-    <script src="/js/pace.js"></script>
-    <%= vite_client_tag %>
-    <%= vite_javascript_tag "jquery" %>
-    <%= vite_javascript_tag "bootstrap" %>
-    <%= vite_javascript_tag "simulator" %>
-    <%= favicon_link_tag "favicon.ico" %>
-    <%= vite_javascript_tag "save" %>
-    <%= vite_javascript_tag "testbench"%>
-    <%= vite_javascript_tag "load" %>
-    
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <%= render "layouts/google_analytics" %>
-  </head>
+<p style="color: green"><%= notice %></p>
 
-  <body>
-    <%= yield %>
-    <%= render partial: 'questions/simulator'%>
-    <%= render partial: 'questions/testbench'%>
-  </body>
-</html>
+<div class="container m-1">
+  <h1>Question Bank</h1>
+  <button id="sortButton" class="btn btn-primary mt-3">Sort Questions</button>
+  <div id="questions">
+    <% @questions.each do |question| %>
+      <div class="border border-dark p-3 mb-3 d-flex justify-content-between">
+      <div class="title m-4">
+                <h3><%= question.id %>. <%=question.title %></h3>
+      </div>
+        <div class="buttons">
+          <%= link_to "Show", question , class: "btn btn-primary d-block" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<script>
+  // app/assets/javascripts/sort_questions.js
+document.addEventListener('DOMContentLoaded', function () {
+  let sortButton = document.getElementById('sortButton');
+  sortButton.addEventListener('click', function () {
+    sortButton.style.backgroundColor = 'rgb(51, 102, 153)';
+    sortQuestions();
+  });
+});
+
+function sortQuestions() {
+  const questionsContainer = document.getElementById('questions');
+  const questions = Array.from(questionsContainer.children);
+
+  // Sort questions based on title (change to your sorting criteria)
+  const sortedQuestions = questions.sort((a, b) => {
+    const titleA = a.querySelector('.title').innerText.toLowerCase();
+    const titleB = b.querySelector('.title').innerText.toLowerCase();
+    return titleA.localeCompare(titleB);
+  });
+
+  // Update the DOM with sorted questions
+  sortedQuestions.forEach(question => questionsContainer.appendChild(question));
+}
+
+</script>

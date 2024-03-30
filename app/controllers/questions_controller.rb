@@ -4,11 +4,19 @@ class QuestionsController < ApplicationController
 
   def index
     @questions = Question.all
-    render 'questions/index'
+    if current_user.admin?
+      render 'questions/index'
+    else 
+      render 'questions/user'
+    end
   end
 
   def show 
     @question = Question.find(params[:id])
+    #json_file_path = Rails.root.join('app', 'views', 'questions', 'javascript', 'fetch.json')
+    #json_data = File.read(json_file_path)
+    #parsed_json = JSON.parse(json_data)
+    #render json: @question.to_json
   end
 
   def new
@@ -17,13 +25,16 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params)
 
-    Rails.logger.info("Received JSON data: #{params[:question].to_json}")
+    #@question.content = MARKDOWN_PARSER.render(@question.content)
+    #Rails.logger.info("Received JSON data: #{params[:question].to_json}")
       # Log the received JSON data
       # Assign values from parsed JSON to your model or do other processing as needed      
       if @question.save
         render json: { status: 'success', message: 'Question created successfully' }, status: :created
+        #redirect_to question_url(@question), notice: 'Quesjkbskstion was successfully created.'
       else
         render json: { status: 'error', message: @question.errors.full_messages.join(', ') }, status: :unprocessable_entity
+        #render :new
       end
   end
   

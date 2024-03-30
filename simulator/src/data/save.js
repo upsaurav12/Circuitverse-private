@@ -98,6 +98,7 @@ export function generateSaveData(name, setName = true) {
     function saveScope(id) {
         if (completed[id]) return;
 
+        //console.log("Processing scope: ", id);
         for (let i = 0; i < dependencyList[id].length; i++) {
             // Save inner subcircuits
             saveScope(dependencyList[id][i]);
@@ -106,13 +107,20 @@ export function generateSaveData(name, setName = true) {
         completed[id] = true;
         update(scopeList[id], true); // For any pending integrity checks on subcircuits
         data.scopes.push(backUp(scopeList[id]));
-    }
 
-    // Save all circuits
+        /*let scope_data = {
+            id: id,
+            Input: scopeList[id].Input || 'Input not available',
+            Output: scopeList[id].Output || 'Output are not available',
+            Gate: scopeList[id].Gate,
+        };
+        data.scopes.push(scope_data)
+        console.log("Scope data:", scope_data);*/
+    }    // Save all circuits
     for (let id in scopeList) { saveScope(id); }
-
     // convert to text
-    let json_data = JSON.stringify(data);
+    //data = JSON.stringify(data);
+    //console.log(data)
     let example_data = {
         title: 'Your question title',
         content: 'Your question content',
@@ -124,6 +132,7 @@ export function generateSaveData(name, setName = true) {
         orderedTabs: getTabsOrder(),
         scopes: []
     }
+    //console.log(example_data)
     $.ajax({
         url: '/questions',
         dataType: 'json',

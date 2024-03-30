@@ -1,53 +1,61 @@
-<title><%= t("layout.simulator.title") %></title>
-    <%= csrf_meta_tags %>
-    <script>window.locale = "<%= I18n.locale %>"</script>
-    <script src="/js/pace.js"></script>
-    <%= vite_client_tag %>
-    <%= vite_javascript_tag "jquery" %>
-    <%= vite_javascript_tag "bootstrap" %>
-    <%= vite_javascript_tag "simulator" %>
-    <%= favicon_link_tag "favicon.ico" %>
-    <%= vite_javascript_tag "save" %>
-    <%= vite_javascript_tag "testbench"%>
-    <%= vite_javascript_tag "load" %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= t("layout.simulator.title") %></title>
+  <%= csrf_meta_tags %>
+  <script>window.locale = "<%= I18n.locale %>"</script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplemde@latest/dist/simplemde.min.css">
+  <script src="assets/simplemde.min.js"></script>
+  <script src="/js/pace.js"></script>
+  <%= vite_client_tag %>
+  <%= vite_javascript_tag "jquery" %>
+  <%= vite_javascript_tag "bootstrap" %>
+  <%= vite_javascript_tag "simulator" %>
+  <%= favicon_link_tag "favicon.ico" %>
+  <%= vite_javascript_tag "save" %>
+  <%= vite_javascript_tag "testbench" %>
+  <%= vite_javascript_tag "load" %>
 
-    <%= content_for :head do %>
-    <% end %>
-    <div class="m-3">
-        <%= form_with(model: @question, url: questions_path, method: :post) do |form| %>
-      
+  <%= content_for :head do %>
+  <% end %>
+</head>
+<body>
+  <div class="m-3">
+    <%= form_with(model: @question, url: questions_path, method: :post) do |form| %>
       <% if @question.errors.any? %>
         <div style="color: red">
-          <h2><%= pluralize(question.errors.count, "error") %> prohibited this question from being saved:</h2>
-    
+          <h2><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved:</h2>
           <ul>
-            <% question.errors.each do |error| %>
+            <% @question.errors.each do |error| %>
               <li><%= error.full_message %></li>
             <% end %>
           </ul>
         </div>
       <% end %>
-    
       <div class="form-group">
         <%= form.label :title, style: "display: block" %>
         <%= form.text_field :title, class: "form-control" %>
       </div>
-    
-      <div class="form-group">
+      <div class="form-group content">
         <%= form.label :content, style: "display: block" %>
-        <%= form.text_area :content, class: "form-control description", id: "markdown-editor" %>
+        <%= form.text_area :content, class: "form-control description" %>
+        <small id="contentHelp" class="form-text text-muted">Hello This is me</small>
       </div>
-    
+      <!-- Preview section for Markdown content -->
+      <div id="markdown-preview"></div>
       <!-- Add additional form fields as needed -->
-    
       <div class="form-group">
         <%= form.submit "Save", class: "btn btn-primary" %>
-        <%= link_to "Back" , questions_path%>
+        <%= link_to "Back", questions_path %>
       </div>
     <% end %>
-    </div>
-    
-        <%= render partial: 'questions/simulator'%>
-    <script>
-    </script>
-    
+  </div>
+  <%= render partial: 'questions/simulator' %>
+  <script src="https://cdn.jsdelivr.net/npm/simplemde@latest/dist/simplemde.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var simplemde = new SimpleMDE({ element: document.getElementById("markdown-editor") });
+    });
+  </script>
+</body>
+</html>
