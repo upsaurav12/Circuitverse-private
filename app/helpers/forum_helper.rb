@@ -8,7 +8,8 @@ module ForumHelper
       hard_wrap: true,
       filter_html: true,
       autolink: true,
-      tables: true
+      tables: true,
+      bold: true
     }
     md = Redcarpet::Markdown.new(Redcarpet::Render::HTML, options)
     sanitize(md.render(text))

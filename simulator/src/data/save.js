@@ -60,7 +60,7 @@ export function getTabsOrder() {
     var tabs = $("#tabsBar").children().not('button');
     var order = [];
     for (let i = 0; i < tabs.length; i++) {
-         order.push(tabs[i].id);
+        order.push(tabs[i].id);
     }
     return order
 }
@@ -98,6 +98,7 @@ export function generateSaveData(name, setName = true) {
     function saveScope(id) {
         if (completed[id]) return;
 
+        //console.log("Processing scope: ", id);
         for (let i = 0; i < dependencyList[id].length; i++) {
             // Save inner subcircuits
             saveScope(dependencyList[id][i]);
@@ -106,13 +107,49 @@ export function generateSaveData(name, setName = true) {
         completed[id] = true;
         update(scopeList[id], true); // For any pending integrity checks on subcircuits
         data.scopes.push(backUp(scopeList[id]));
-    }
 
-    // Save all circuits
+        /*let scope_data = {
+            id: id,
+            Input: scopeList[id].Input || 'Input not available',
+            Output: scopeList[id].Output || 'Output are not available',
+            Gate: scopeList[id].Gate,
+        };
+        data.scopes.push(scope_data)
+        console.log("Scope data:", scope_data);*/
+    }    // Save all circuits
     for (let id in scopeList) { saveScope(id); }
-
     // convert to text
-    data = JSON.stringify(data);
+    //data = JSON.stringify(data);
+    //console.log(data)
+    let example_data = {
+        title: 'Your question title',
+        content: 'Your question content',
+        name: stripTags(name),
+        timePeriod: simulationArea.timePeriod,
+        clockEnabled: simulationArea.clockEnabled,
+        projectId: projectId,
+        focussedCircuit: globalScope.id,
+        orderedTabs: getTabsOrder(),
+        scopes: []
+    }
+    //console.log(example_data)
+    $.ajax({
+        url: '/questions',
+        dataType: 'json',
+        type: 'POST',
+        contentType: 'application/json',
+        beforeSend(xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+        },
+        data: JSON.stringify(example_data),
+        success: function(response) {
+            console.log('Response from Rails:', response);
+            // Handle the response if needed
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('Error:', errorThrown);
+        }
+    });
     return data;
 }
 
@@ -247,22 +284,22 @@ export function generateImage(imgType, view, transparent, resolution, down = tru
 }
 
 async function crop(dataURL, w, h) {
-  //get empty second canvas
-  var myCanvas = document.createElement("CANVAS");
-  myCanvas.width = w;
-  myCanvas.height = h;
-  var myContext = myCanvas.getContext('2d');
-  var myImage;
-  var img = new Image();
-  return new Promise (function (resolved, rejected) {
+    //get empty second canvas
+    var myCanvas = document.createElement("CANVAS");
+    myCanvas.width = w;
+    myCanvas.height = h;
+    var myContext = myCanvas.getContext('2d');
+    var myImage;
+    var img = new Image();
+    return new Promise (function (resolved, rejected) {
         img.src = dataURL;
         img.onload = () => {
-        myContext.drawImage(img, 0, 0, w, h,0,0, w ,h);
-        myContext.save();
+            myContext.drawImage(img, 0, 0, w, h,0,0, w ,h);
+            myContext.save();
 
-        //create a new data URL
-        myImage = myCanvas.toDataURL('image/jpeg');
-        resolved(myImage);}
+            //create a new data URL
+            myImage = myCanvas.toDataURL('image/jpeg');
+            resolved(myImage);}
     })
 }
 
