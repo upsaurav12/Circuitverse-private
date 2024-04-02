@@ -165,6 +165,7 @@ Rails.application.routes.draw do
       post "/oauth/login", to: "authentication#oauth_login"
       post "/oauth/signup", to: "authentication#oauth_signup"
       get  "/public_key.pem", to: "authentication#public_key"
+      get "questions/new", to: "new#new"
       post "/password/forgot", to: "authentication#forgot_password"
       get "/notifications", to: "notifications#index"
       patch "/notifications/mark_as_read/:notification_id", to: "notifications#mark_as_read"
@@ -235,7 +236,7 @@ Rails.application.routes.draw do
       end
     end
   end
-
+  
   resources :questions
 end
 # rubocop:enable Metrics/BlockLength

@@ -1,31 +1,63 @@
-<body class="scrollbar-hidden">
-    <div class="question-container d-flex">
-        <div class="question-left">
-            <h4><%= @question.id%>.
-                <%= @question.title %></h4>
-            <h5><%= @question.content %></h5>
-            <%= link_to "Back" , questions_path%>
+<html>
+<title><%= t("layout.simulator.title") %></title>
+    <%= csrf_meta_tags %>
+    <script>window.locale = "<%= I18n.locale %>"</script>
+    <script src="/js/pace.js"></script>
+    <%= vite_client_tag %>
+    <%= vite_javascript_tag "jquery" %>
+    <%= vite_javascript_tag "bootstrap" %>
+    <%= vite_javascript_tag "simulator" %>
+    <%= favicon_link_tag "favicon.ico" %>
+    <%= vite_javascript_tag "save" %>
+    <%= vite_javascript_tag "testbench"%>
+    <%= vite_javascript_tag "load" %>
+
+    <%= content_for :head do %>
+    <% end %>
+    <div class="m-3">
+        <%= form_with(model: @question, url: questions_path, method: :post) do |form| %>
+      
+      <% if @question.errors.any? %>
+        <div style="color: red">
+          <h2><%= pluralize(question.errors.count, "error") %> prohibited this question from being saved:</h2>
+    
+          <ul>
+            <% question.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
         </div>
-        <%= form_for @question do |form| %>
-            <div class="question-right">
-                <div class="simulator">
-                    <%= form_for @question do |form| %>
-                        <!-- Your form fields go here -->
-                        <div class="form-group">
-                            <%= form.label :title %>
-                            <%= form.text_field :title, class: "form-control" %>
-                        </div>
-                        <div class="form-group">
-                            <%= form.label :content %>
-                            <%= form.rich_text_area :content, class: "form-control" %>
-                        </div>
-                        <div class="form-group">
-                            <%= form.submit "Submit", class: "btn btn-primary" %>
-                        </div>
-                    <% end %>
-                </div>
-            </div>
-        <% end %>
-        
+      <% end %>
+      <% if @circuit_data.present? %>
+  <h2>Circuit Data</h2>
+  <%= @circuit_data.to_json.html_safe %>
+<% end %>
+          <div class="form-group">
+            <label for="title" style="display: block">Title:</label>
+            <input type="text" id="title" name="title" class="form-control" value="<%= @question.title %>" readonly>
+          </div>
+
+          <div class="form-group">
+            <label for="content" style="display: block">Content:</label>
+            <div><%= markdown(@question.content) %></div>
+          </div>
+      <div class="form-group">
+        <%= form.submit "Save", class: "btn btn-primary" %>
+        <%= link_to "Back" , questions_path%>
+      </div>
+    <% end %>
     </div>
-</div></body>
+    
+        <%= render partial: 'questions/simulator'%>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+    // Parse JSON data passed from the controller
+    const circuitData = <%= @circuit_data.to_json %>;
+    console.log("Heloo")
+
+    // Call the load function from the JavaScript file with the parsed JSON data
+    load(circuitData);
+  });
+    </script>
+    </html>
+    

@@ -11,15 +11,14 @@
       </div>
         <div class="buttons">
           <%= link_to "Show", question , class: "btn btn-primary d-block" %>
-          <%= link_to "Edit", edit_question_path(question), class: "btn btn-warning mr-2 mt-3 pr-4 text-center d-block" %>
         </div>
+        <div class="buttons">
+          <%= link_to "Profile", progress , class: "btn btn-primary d-block" %>
+        </div>
+        
       </div>
     <% end %>
   </div>
-
-  <%= link_to "New Question", new_question_path, class: "btn btn-primary mt-3" %>
-  <%= link_to "View Progress", progress_questions_path, class: "btn btn-primary" %>
-
 </div>
 <script>
   // app/assets/javascripts/sort_questions.js
