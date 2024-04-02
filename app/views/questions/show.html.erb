@@ -28,6 +28,10 @@
           </ul>
         </div>
       <% end %>
+      <% if @circuit_data.present? %>
+  <h2>Circuit Data</h2>
+  <%= @circuit_data.to_json.html_safe %>
+<% end %>
           <div class="form-group">
             <label for="title" style="display: block">Title:</label>
             <input type="text" id="title" name="title" class="form-control" value="<%= @question.title %>" readonly>
@@ -46,6 +50,14 @@
     
         <%= render partial: 'questions/simulator'%>
     <script>
+      document.addEventListener('DOMContentLoaded', function() {
+    // Parse JSON data passed from the controller
+    const circuitData = <%= @circuit_data.to_json %>;
+    console.log("Heloo")
+
+    // Call the load function from the JavaScript file with the parsed JSON data
+    load(circuitData);
+  });
     </script>
     </html>
     
